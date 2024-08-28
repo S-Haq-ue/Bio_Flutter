@@ -22,5 +22,6 @@ LinearGradient backgroundGradientGrey = const LinearGradient(
 );
 
 double webPageSize = 600;
+double tabScreenSize = 900;
 
 

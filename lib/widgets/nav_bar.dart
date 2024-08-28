@@ -52,7 +52,7 @@ class NavBar extends StatelessWidget {
             else
               IconButton(
                 onPressed: () => commonProvider.scaffoldKey.currentState!.openEndDrawer(),
-                icon: const Icon(Icons.menu),
+                icon: const Icon(Icons.menu,color: Colors.white54,),
               ),
           ],
         ),

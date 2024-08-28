@@ -13,10 +13,11 @@ class CustomDrawer extends StatelessWidget {
       backgroundColor: backGroundColor,
       width: 200,
       shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(// Top right corner radius
-              bottomLeft: Radius.circular(10.0), // Bottom right corner radius
-            ),
-          ),
+        borderRadius: BorderRadius.only(
+          // Top right corner radius
+          bottomLeft: Radius.circular(10.0), // Bottom right corner radius
+        ),
+      ),
       child: Consumer<CommonProvider>(builder: (context, commonProvider, child) {
         return ListView.builder(
           itemCount: navBarItems.length,
@@ -25,13 +26,17 @@ class CustomDrawer extends StatelessWidget {
               children: [
                 Container(
                   width: double.maxFinite,
-                  decoration: BoxDecoration(gradient: navBarBackgroundGradient,borderRadius: BorderRadius.circular(8)),
+                  decoration: BoxDecoration(gradient: navBarBackgroundGradient, borderRadius: BorderRadius.circular(8)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text(navBarItems[index])),
+                    child: Center(
+                        child: Text(
+                      navBarItems[index],
+                      style: const TextStyle(
+                        color: Colors.white54,
+                      ),
+                    )),
                   ),
-                  // leading: index >= draweIcons.length ? const SizedBox(width: 10,) : draweIcons[index],
-                  // title: Text(navBarItems[index]),
                 ),
                 const SizedBox(
                   height: 5,
