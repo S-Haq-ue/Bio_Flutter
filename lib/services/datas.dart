@@ -52,14 +52,26 @@ List<Map> skillsPlatform = [
   },
   {
     "name": "iOS Developer",
-    "logo": const Icon(Bootstrap.apple, size: 20,color: Colors.white54,),
+    "logo": const Icon(
+      Bootstrap.apple,
+      size: 20,
+      color: Colors.white54,
+    ),
   },
   {
     "name": "Web Developer",
-    "logo": const Icon(Bootstrap.browser_chrome, size: 20,color: Colors.white54,),
+    "logo": const Icon(
+      Bootstrap.browser_chrome,
+      size: 20,
+      color: Colors.white54,
+    ),
   },
   {
     "name": "Penetration Testing",
-    "logo": const Icon(Bootstrap.bug_fill, size: 20,color: Colors.white54,),
+    "logo": const Icon(
+      Bootstrap.bug_fill,
+      size: 20,
+      color: Colors.white54,
+    ),
   },
 ];
