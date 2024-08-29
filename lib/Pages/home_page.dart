@@ -28,218 +28,235 @@ class HomePage extends StatelessWidget {
                     commonProvider.scrollControllerFunction(value);
                   },
                 ),
-          body: SingleChildScrollView(
-            controller: commonProvider.scrollController,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  key: commonProvider.navBarKeyList.first,
-                ),
-                //Header
-                NavBar(
-                  screenWidth: constraints.maxWidth,
-                  commonProvider: commonProvider,
-                  navBarFunction: (value) {
-                    commonProvider.scrollControllerFunction(value);
-                  },
-                ),
-                //body
-                SizedBox(
-                  height: 600,
-                  width: double.maxFinite,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 25),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (constraints.maxWidth < webPageSize)
-                                SizedBox(
-                                  width: 500,
-                                  child: Image.asset(
-                                    backgroundImage,
-                                    fit: BoxFit.contain,
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                controller: commonProvider.scrollController,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      key: commonProvider.navBarKeyList.first,
+                    ),
+                    //Header
+                    // NavBar(
+                    //   screenWidth: constraints.maxWidth,
+                    //   commonProvider: commonProvider,
+                    //   navBarFunction: (value) {
+                    //     commonProvider.scrollControllerFunction(value);
+                    //   },
+                    // ),
+                    //body
+                    SizedBox(
+                      height: 600,
+                      width: double.maxFinite,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 25),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  if (constraints.maxWidth < webPageSize)
+                                    SizedBox(
+                                      width: 500,
+                                      child: Image.asset(
+                                        backgroundImage,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  Text(
+                                    "SHAMEEMUL HAQUE P",
+                                    style: GoogleFonts.teko(
+                                      color: Colors.white,
+                                      fontSize: 50,
+                                    ),
                                   ),
-                                ),
-                              Text(
-                                "SHAMEEMUL HAQUE P",
-                                style: GoogleFonts.teko(
-                                  color: Colors.white,
-                                  fontSize: 50,
-                                ),
+                                  Text(
+                                    "FLUTTER DEVELOPER",
+                                    style: GoogleFonts.unicaOne(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  if (constraints.maxWidth < webPageSize)
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                ],
                               ),
-                              Text(
-                                "FLUTTER DEVELOPER",
-                                style: GoogleFonts.unicaOne(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              if (constraints.maxWidth < webPageSize)
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                            ],
+                            ),
                           ),
-                        ),
+                          if (constraints.maxWidth > webPageSize)
+                            Flexible(
+                              child: Image.asset(
+                                backgroundImage,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                        ],
                       ),
-                      if (constraints.maxWidth > webPageSize)
-                        Flexible(
-                          child: Image.asset(
-                            backgroundImage,
-                            fit: BoxFit.contain,
+                    ),
+                    //Skills
+                    SkillPage(
+                        key: commonProvider.navBarKeyList[1],
+                        screenWidth: constraints.maxWidth,
+                        commonProvider: commonProvider),
+                    //Project
+                    SizedBox(
+                      key: commonProvider.navBarKeyList[2],
+                      width: double.maxFinite,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 20,
                           ),
-                        ),
-                    ],
-                  ),
+                          Text(
+                            "Work Projects",
+                            style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ProjectCard(
+                            screenSize: constraints.maxWidth,
+                            projectModel: workProjects,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    //Project
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Personal Projects",
+                            style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ProjectCard(
+                            screenSize: constraints.maxWidth,
+                            projectModel: personalProjects,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    //Education
+                    Container(
+                      key: commonProvider.navBarKeyList[3],
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(gradient: navBarBackgroundGradient),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Educational Qualifications",
+                            style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          EducationCard(
+                            screenSize: constraints.maxWidth,
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    //contact
+                    SizedBox(
+                      key: commonProvider.navBarKeyList[4],
+                      width: double.maxFinite,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Get in touch",
+                            style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ContactDetails(
+                            screenSize: constraints.maxWidth,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    //Footer
+                    Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        gradient: navBarBackgroundGradient,
+                      ),
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Made by HAQ with Flutter 3.22.2",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                //Skills
-                SkillPage(
-                    key: commonProvider.navBarKeyList[1],
+              ),
+              if (!commonProvider.isScrolling)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: NavBar(
                     screenWidth: constraints.maxWidth,
-                    commonProvider: commonProvider),
-                //Project
-                SizedBox(
-                  key: commonProvider.navBarKeyList[2],
-                  width: double.maxFinite,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Work Projects",
-                        style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ProjectCard(
-                        screenSize: constraints.maxWidth,
-                        projectModel: workProjects,
-                      )
-                    ],
+                    commonProvider: commonProvider,
+                    navBarFunction: (value) {
+                      commonProvider.scrollControllerFunction(value);
+                    },
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
-                //Project
-                SizedBox(
-                  width: double.maxFinite,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Personal Projects",
-                        style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ProjectCard(
-                        screenSize: constraints.maxWidth,
-                        projectModel: personalProjects,
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                //Education
-                Container(
-                  key: commonProvider.navBarKeyList[3],
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(gradient: navBarBackgroundGradient),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Educational Qualifications",
-                        style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      EducationCard(
-                        screenSize: constraints.maxWidth,
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                //contact
-                SizedBox(
-                  key: commonProvider.navBarKeyList[4],
-                  width: double.maxFinite,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Get in touch",
-                        style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ContactDetails(
-                        screenSize: constraints.maxWidth,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                //Footer
-                Container(
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    gradient: navBarBackgroundGradient,
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Made by HAQ with Flutter 3.22.2",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            ],
           ),
         );
       });

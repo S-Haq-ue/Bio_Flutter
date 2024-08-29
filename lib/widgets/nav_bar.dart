@@ -22,7 +22,7 @@ class NavBar extends StatelessWidget {
       height: 50,
       margin: const EdgeInsets.all(16),
       width: double.maxFinite,
-      decoration: BoxDecoration(gradient: navBarBackgroundGradient, borderRadius: BorderRadius.circular(16)),
+      decoration: BoxDecoration(gradient: navBarBackgroundGradient, borderRadius: BorderRadius.circular(16),border: Border.all(color: backGroundColor,)),
       child: Padding(
         padding: const EdgeInsets.only(right: 16),
         child: Row(
