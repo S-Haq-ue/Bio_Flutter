@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haq_wt_u_nd_2_know/Pages/skill_page.dart';
+import 'package:haq_wt_u_nd_2_know/services/projects.dart';
+import 'package:haq_wt_u_nd_2_know/widgets/contact_details.dart';
 import 'package:haq_wt_u_nd_2_know/widgets/custom_drawer.dart';
+import 'package:haq_wt_u_nd_2_know/widgets/education_card.dart';
 import 'package:haq_wt_u_nd_2_know/widgets/nav_bar.dart';
 import 'package:haq_wt_u_nd_2_know/provider/common_provider.dart';
 import 'package:haq_wt_u_nd_2_know/services/constant.dart';
+import 'package:haq_wt_u_nd_2_know/widgets/project_card.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -78,7 +82,6 @@ class HomePage extends StatelessWidget {
               SkillPage(screenWidth: constraints.maxWidth, commonProvider: commonProvider),
               //Project
               SizedBox(
-                height: 500,
                 width: double.maxFinite,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -93,12 +96,18 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    ProjectCard(
+                      screenSize: constraints.maxWidth,
+                      projectModel: workProjects,
+                    )
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 50,
+              ),
               //Project
               SizedBox(
-                height: 500,
                 width: double.maxFinite,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -113,15 +122,95 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    ProjectCard(
+                      screenSize: constraints.maxWidth,
+                      projectModel: personalProjects,
+                    )
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 50,
+              ),
+              //Education
+              Container(
+                width: double.maxFinite,
+                decoration: BoxDecoration(gradient: navBarBackgroundGradient),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Educational Qualifications",
+                      style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    EducationCard(
+                      screenSize: constraints.maxWidth,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              //contact
+              SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Get in touch",
+                      style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ContactDetails(
+                      screenSize: constraints.maxWidth,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
               //Footer
               Container(
-                height: 500,
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   gradient: navBarBackgroundGradient,
+                ),
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Made by HAQ with Flutter 3.22.2",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
                 ),
               ),
             ],

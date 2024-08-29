@@ -33,13 +33,13 @@ final GoRouter _goRouter = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return HomePage();
+        return const HomePage();
       },
       routes: <RouteBase>[
         GoRoute(
           path: 'Skills',
           builder: (BuildContext context, GoRouterState state) {
-            return HomePage();
+            return const HomePage();
           },
         ),
       ],

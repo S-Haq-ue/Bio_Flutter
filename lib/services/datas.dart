@@ -75,3 +75,37 @@ List<Map> skillsPlatform = [
     ),
   },
 ];
+
+List<Map> contact = [
+  {
+    "id": "GitHub",
+    "logo": const Image(
+      image: AssetImage('assets/images/github.png'),
+      color: Colors.white54,
+    ),
+  },
+  {
+    "id": "Instagram",
+    "logo": const Image(image: AssetImage('assets/images/instagram.png')),
+  },
+  {
+    "id": "LinkedIn",
+    "logo": const Image(image: AssetImage('assets/images/linkedin.png')),
+  },
+  {
+    "id": "email",
+    "logo": const Icon(
+      Icons.email,
+      size: 20,
+      color: Colors.white54,
+    ),
+  },
+  {
+    "id": "Whatsapp",
+    "logo": const Icon(
+      Bootstrap.whatsapp,
+      size: 20,
+      color: Colors.white54,
+    ),
+  },
+];
