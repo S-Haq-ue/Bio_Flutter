@@ -5,7 +5,8 @@ import 'package:haq_wt_u_nd_2_know/services/datas.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key});
+  const CustomDrawer({super.key, required this.sideDrawerFunction});
+  final Function(int) sideDrawerFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +25,25 @@ class CustomDrawer extends StatelessWidget {
           itemBuilder: (context, index) {
             return Column(
               children: [
-                Container(
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(gradient: navBarBackgroundGradient, borderRadius: BorderRadius.circular(8)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                        child: Text(
-                      navBarItems[index],
-                      style: const TextStyle(
-                        color: Colors.white54,
-                      ),
-                    )),
+                InkWell(
+                  child: Container(
+                    width: double.maxFinite,
+                    decoration:
+                        BoxDecoration(gradient: navBarBackgroundGradient, borderRadius: BorderRadius.circular(8)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                          child: Text(
+                        navBarItems[index],
+                        style: const TextStyle(
+                          color: Colors.white54,
+                        ),
+                      )),
+                    ),
                   ),
+                  onTap: () {
+                    sideDrawerFunction(index);
+                  },
                 ),
                 const SizedBox(
                   height: 5,

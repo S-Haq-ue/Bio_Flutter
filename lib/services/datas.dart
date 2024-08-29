@@ -7,7 +7,6 @@ List<String> navBarItems = [
   "Projects",
   "Education",
   "Contact",
-  "About",
 ];
 
 List<Map> skills = [

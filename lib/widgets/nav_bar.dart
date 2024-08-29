@@ -8,10 +8,12 @@ import 'package:haq_wt_u_nd_2_know/services/datas.dart';
 class NavBar extends StatelessWidget {
   final double screenWidth;
   final CommonProvider commonProvider;
+  final Function(int) navBarFunction;
   const NavBar({
     super.key,
     required this.screenWidth,
     required this.commonProvider,
+    required this.navBarFunction,
   });
 
   @override
@@ -36,7 +38,9 @@ class NavBar extends StatelessWidget {
                       commonProvider.hoverIndex = -1;
                     }
                   },
-                  onTap: () {},
+                  onTap: () {
+                    navBarFunction(i);
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Text(
@@ -52,7 +56,10 @@ class NavBar extends StatelessWidget {
             else
               IconButton(
                 onPressed: () => commonProvider.scaffoldKey.currentState!.openEndDrawer(),
-                icon: const Icon(Icons.menu,color: Colors.white54,),
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.white54,
+                ),
               ),
           ],
         ),
