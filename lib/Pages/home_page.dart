@@ -141,6 +141,7 @@ class HomePage extends StatelessWidget {
                           ProjectCard(
                             screenSize: constraints.maxWidth,
                             projectModel: personalProjects,
+                            personal: true,
                           )
                         ],
                       ),
