@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUs {
@@ -13,10 +12,10 @@ class ContactUs {
     }
   }
 
-  static void launchEmailSubmission(String url) async {
+  static void launchEmailSubmission(String email) async {
     final Uri params = Uri(
       scheme: 'mailto',
-      path: 'igoldlive916@gmail.com',
+      path: email,
     );
     String url = params.toString();
     await launchUrl(Uri.parse(url));

@@ -38,15 +38,6 @@ class HomePage extends StatelessWidget {
                     SizedBox(
                       key: commonProvider.navBarKeyList.first,
                     ),
-                    //Header
-                    // NavBar(
-                    //   screenWidth: constraints.maxWidth,
-                    //   commonProvider: commonProvider,
-                    //   navBarFunction: (value) {
-                    //     commonProvider.scrollControllerFunction(value);
-                    //   },
-                    // ),
-                    //body
                     SizedBox(
                       height: 600,
                       width: double.maxFinite,

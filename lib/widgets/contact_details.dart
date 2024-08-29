@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haq_wt_u_nd_2_know/services/datas.dart';
+import 'package:haq_wt_u_nd_2_know/widgets/contact_us.dart';
 
 class ContactDetails extends StatelessWidget {
   final double screenSize;
@@ -31,6 +32,15 @@ class ContactDetails extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                  onTap: () {
+                    if (i == 0) {
+                      ContactUs.launchEmailSubmission(contact[i]["url"]);
+                    } else if (i == contact.length - 1) {
+                      ContactUs.sendWhatsappMessage(contact[i]["url"]);
+                    } else {
+                      ContactUs.launchWebsite(contact[i]["url"]);
+                    }
+                  },
                 ),
               ),
             ),

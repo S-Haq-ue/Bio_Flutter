@@ -29,7 +29,8 @@ class EducationCard extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       educationData[i].course,
@@ -40,7 +41,7 @@ class EducationCard extends StatelessWidget {
                       style: const TextStyle(color: Colors.white),
                     ),
                     Text(
-                      educationData[i].gPA!,
+                      educationData[i].gPA ?? "",
                       style: const TextStyle(color: Colors.white),
                     ),
                   ],

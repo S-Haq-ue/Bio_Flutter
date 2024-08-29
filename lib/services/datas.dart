@@ -77,34 +77,39 @@ List<Map> skillsPlatform = [
 
 List<Map> contact = [
   {
-    "id": "GitHub",
-    "logo": const Image(
-      image: AssetImage('assets/images/github.png'),
-      color: Colors.white54,
-    ),
-  },
-  {
-    "id": "Instagram",
-    "logo": const Image(image: AssetImage('assets/images/instagram.png')),
-  },
-  {
-    "id": "LinkedIn",
-    "logo": const Image(image: AssetImage('assets/images/linkedin.png')),
-  },
-  {
     "id": "email",
     "logo": const Icon(
       Icons.email,
       size: 20,
       color: Colors.white54,
     ),
+    "url": "shameemulhaquep@gmail.com",
+  },
+  {
+    "id": "GitHub",
+    "logo": const Image(
+      image: AssetImage('assets/images/github.png'),
+      color: Colors.white54,
+    ),
+    "url": "https://github.com/S-Haq-ue",
+  },
+  {
+    "id": "Instagram",
+    "logo": const Image(image: AssetImage('assets/images/instagram.png')),
+    "url": "https://www.instagram.com/s__haq_ue",
+  },
+  {
+    "id": "LinkedIn",
+    "logo": const Image(image: AssetImage('assets/images/linkedin.png')),
+    "url": "https://www.linkedin.com/in/haque007",
   },
   {
     "id": "Whatsapp",
     "logo": const Icon(
       Bootstrap.whatsapp,
       size: 20,
-      color: Colors.white54,
+      color: Colors.green,
     ),
+    "url": "9061444173",
   },
 ];

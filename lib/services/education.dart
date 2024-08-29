@@ -9,16 +9,15 @@ List<Education> educationData = [
   Education(
     course: "B-Tech INFORMATION TECHNOLOGY",
     location: "Govt Engineering Collage Idukki",
-    gPA: "CGPA 7.87,",
+    gPA: "CGPA 7.87",
   ),
   Education(
-    course: "B-Tech INFORMATION TECHNOLOGY",
-    location: "Govt Engineering Collage Idukki",
-    gPA: "CGPA 7.87,",
+    course: "Bug Bounty Hunting & Web Security Testing",
+    location: "Udemy",
   ),
   Education(
-    course: "B-Tech INFORMATION TECHNOLOGY",
-    location: "Govt Engineering Collage Idukki",
-    gPA: "CGPA 7.87,",
+    course: "HSE",
+    location: "VHM HSS MORAYUR",
+    gPA: "8.94",
   ),
 ];
