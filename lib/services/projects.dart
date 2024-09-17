@@ -5,8 +5,10 @@ class ProjectModel {
   final String? androidLink;
   final String? iosLink;
   final String? gitLink;
+  final String? designLink;
   final bool isPublished;
   ProjectModel({
+    this.designLink,
     this.gitLink,
     this.image,
     this.subtitle,
@@ -39,6 +41,7 @@ List<ProjectModel> workProjects = [
     isPublished: false,
   ),
 ];
+
 List<ProjectModel> personalProjects = [
   ProjectModel(
     image: 'assets/images/snap.jpeg',
@@ -71,5 +74,15 @@ List<ProjectModel> personalProjects = [
     title: "Meals Application",
     subtitle: "A menu application that can be used as a cooking manual for various types of food.",
     gitLink: "https://github.com/S-Haq-ue/Meals.git",
+  ),
+];
+
+List<ProjectModel> uIProjects = [
+  ProjectModel(
+    image: 'assets/images/snap.jpeg',
+    title: "Snap Shield",
+    subtitle:
+        "A secure social media platform powered by ML models to detect and protect sensitive and confidential data shared by users.",
+    gitLink: "https://github.com/S-Haq-ue/Snap-shield.git",
   ),
 ];
