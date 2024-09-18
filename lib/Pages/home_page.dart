@@ -149,6 +149,33 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 50,
                     ),
+                    //Project
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "UI Projects",
+                            style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ProjectCard(
+                            screenSize: constraints.maxWidth,
+                            projectModel: uIProjects,
+                            personal: true,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
                     //Education
                     Container(
                       key: commonProvider.navBarKeyList[3],
