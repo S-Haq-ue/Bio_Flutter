@@ -122,33 +122,6 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 50,
                     ),
-                    //Project
-                    SizedBox(
-                      width: double.maxFinite,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Personal Projects",
-                            style: GoogleFonts.julee(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          ProjectCard(
-                            screenSize: constraints.maxWidth,
-                            projectModel: personalProjects,
-                            personal: true,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
                     //Education
                     Container(
                       key: commonProvider.navBarKeyList[3],
@@ -223,7 +196,7 @@ class HomePage extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            "Made by HAQ with Flutter 3.22.2",
+                            "Made by HAQ with Flutter 3.32.5",
                             style: TextStyle(color: Colors.white),
                           ),
                           SizedBox(
