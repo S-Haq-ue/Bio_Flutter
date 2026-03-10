@@ -124,7 +124,7 @@ class _ProjectCardState extends State<ProjectCard> {
                                 ? Transform(
                                     alignment: Alignment.center,
                                     transform: Matrix4.identity()..rotateY(pi),
-                                    child: _buildToolsContainer(),
+                                    child: _buildToolsContainer(_isInfoHovered),
                                   )
                                 : _buildImageContainer(_isHovered),
                           );
@@ -211,13 +211,22 @@ class _ProjectCardState extends State<ProjectCard> {
     );
   }
 
-  Widget _buildToolsContainer() {
+  Widget _buildToolsContainer(bool isHovered) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.glassBackground,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.glassBorder),
+        color: AppColors.glassBackgroundLight.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(20),
+          topRight: const Radius.circular(20),
+          bottomLeft: Radius.circular(isHovered ? 0 : 20),
+          bottomRight: Radius.circular(isHovered ? 0 : 20),
+        ),
+        border: Border(
+          top: BorderSide(color: AppColors.glassBorder),
+          left: BorderSide(color: AppColors.glassBorder),
+          right: BorderSide(color: AppColors.glassBorder),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

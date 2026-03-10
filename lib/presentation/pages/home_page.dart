@@ -5,6 +5,7 @@ import '../sections/skills_section.dart';
 import '../sections/projects_section.dart';
 import '../sections/experience_section.dart';
 import '../sections/contact_section.dart';
+import '../sections/education_section.dart';
 import '../widgets/animated_background.dart';
 import '../widgets/glass_nav_bar.dart';
 
@@ -27,6 +28,7 @@ class HomePage extends StatelessWidget {
               ExperienceSection(),
               SkillsSection(),
               ProjectsSection(),
+              EducationSection(),
               ContactSection(),
             ],
           ),

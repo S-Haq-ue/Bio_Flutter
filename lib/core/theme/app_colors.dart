@@ -18,4 +18,5 @@ class AppColors {
   static Color glassBorder = const Color.fromARGB(255, 86, 47, 0).withValues(alpha: 0.3); // Subtle dark border
   static const Color glassBackground = Color(0x0A000000); // Subtle dark tint
   static const Color glassBackgroundDark = Color(0x1A000000); // Stronger dark tint
+  static const Color glassBackgroundLight = Color(0x1AFFFFFF); // subtle white tint
 }
