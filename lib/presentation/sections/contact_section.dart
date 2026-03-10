@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme/app_colors.dart';
 import '../widgets/datas.dart';
+import '../../core/utils/responsive.dart';
 
 class ContactSection extends StatefulWidget {
   const ContactSection({super.key});
@@ -13,7 +14,7 @@ class ContactSection extends StatefulWidget {
 class _ContactSectionState extends State<ContactSection> {
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 768;
+    final isMobile = Responsive.isMobile(context);
 
     return Container(
       width: double.infinity,

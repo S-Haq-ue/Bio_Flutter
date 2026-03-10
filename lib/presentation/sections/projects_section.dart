@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/project.dart';
 import '../widgets/project_card.dart';
+import '../../core/utils/responsive.dart';
 
 class ProjectsSection extends StatelessWidget {
   const ProjectsSection({super.key});
@@ -122,7 +123,7 @@ class ProjectsSection extends StatelessWidget {
           // ),
           const SizedBox(height: 64),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 100),
+            padding: EdgeInsets.symmetric(horizontal: Responsive.isMobile(context) ? 0 : 100),
             child: Wrap(
               spacing: 32,
               runSpacing: 32,

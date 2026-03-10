@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 
 class GlassNavBar extends StatelessWidget {
-  const GlassNavBar({super.key});
+  final Function(String) onNavSelected;
+
+  const GlassNavBar({super.key, required this.onNavSelected});
 
   @override
   Widget build(BuildContext context) {
-    final navItems = ['Home', 'About', 'Skills', 'Projects', 'Experience', 'Contact'];
+    final navItems = ['Home', 'About', 'Experience', 'Skills', 'Projects', 'Education', 'Contact'];
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
@@ -34,7 +36,7 @@ class GlassNavBar extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: InkWell(
                   onTap: () {
-                    // TODO: Implement scroll to section
+                    onNavSelected(item);
                   },
                   child: Text(
                     item,

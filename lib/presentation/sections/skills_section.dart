@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../widgets/datas.dart';
 
+import '../../core/utils/responsive.dart';
+
 class SkillsSection extends StatefulWidget {
   const SkillsSection({super.key});
 
@@ -39,7 +41,7 @@ class _SkillsSectionState extends State<SkillsSection> with SingleTickerProvider
       }
     });
 
-    final isMobile = MediaQuery.of(context).size.width < 768;
+    final isMobile = Responsive.isMobile(context);
 
     return Container(
       width: double.infinity,

@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 
+import '../../core/utils/responsive.dart';
+
 class AboutSection extends StatefulWidget {
   const AboutSection({super.key});
 
@@ -52,7 +54,7 @@ class _AboutSectionState extends State<AboutSection> with SingleTickerProviderSt
       }
     });
 
-    final isMobile = MediaQuery.of(context).size.width < 768;
+    final isMobile = Responsive.isMobile(context);
 
     return Container(
       width: double.infinity,
