@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+import '../../core/theme/app_colors.dart';
 
 List<String> navBarItems = [
   "Profile",
@@ -54,7 +55,7 @@ List<Map> skillsPlatform = [
     "logo": const Icon(
       Bootstrap.apple,
       size: 20,
-      color: Colors.white54,
+      color: AppColors.textSecondary,
     ),
   },
   {
@@ -62,7 +63,7 @@ List<Map> skillsPlatform = [
     "logo": const Icon(
       Bootstrap.browser_chrome,
       size: 20,
-      color: Colors.white54,
+      color: AppColors.textSecondary,
     ),
   },
   {
@@ -70,7 +71,7 @@ List<Map> skillsPlatform = [
     "logo": const Icon(
       Bootstrap.bug_fill,
       size: 20,
-      color: Colors.white54,
+      color: AppColors.textSecondary,
     ),
   },
 ];
@@ -81,7 +82,7 @@ List<Map> contact = [
     "logo": const Icon(
       Icons.email,
       size: 20,
-      color: Colors.white54,
+      color: AppColors.textSecondary,
     ),
     "url": "shameemulhaquep@gmail.com",
   },
@@ -89,7 +90,7 @@ List<Map> contact = [
     "id": "GitHub",
     "logo": const Image(
       image: AssetImage('assets/images/github.png'),
-      color: Colors.white54,
+      color: AppColors.textSecondary,
     ),
     "url": "https://github.com/S-Haq-ue",
   },

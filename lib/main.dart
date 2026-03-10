@@ -1,48 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:haq_wt_u_nd_2_know/Pages/home_page.dart';
-import 'package:haq_wt_u_nd_2_know/provider/common_provider.dart';
-import 'package:provider/provider.dart';
+import 'core/theme/app_theme.dart';
+import 'presentation/pages/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const PortfolioApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class PortfolioApp extends StatelessWidget {
+  const PortfolioApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CommonProvider(),
-      child: MaterialApp.router(
-        title: 'Haq what U need 2 know',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        routerConfig: _goRouter,
-      ),
+    return MaterialApp(
+      title: 'Flutter Developer Portfolio',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      home: const HomePage(),
     );
   }
 }
-
-final GoRouter _goRouter = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const HomePage();
-      },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'Skills',
-          builder: (BuildContext context, GoRouterState state) {
-            return const HomePage();
-          },
-        ),
-      ],
-    ),
-  ],
-);
