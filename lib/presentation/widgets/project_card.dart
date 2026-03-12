@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/project.dart';
+import '../../core/providers/project_card_provider.dart';
 
-class ProjectCard extends StatefulWidget {
+class ProjectCard extends StatelessWidget {
   final Project project;
 
   const ProjectCard({
@@ -12,168 +14,167 @@ class ProjectCard extends StatefulWidget {
   });
 
   @override
-  State<ProjectCard> createState() => _ProjectCardState();
-}
-
-class _ProjectCardState extends State<ProjectCard> {
-  bool _isHovered = false;
-  bool _isInfoHovered = false;
-
-  @override
   Widget build(BuildContext context) {
-    final bool isCardActive = _isHovered || _isInfoHovered;
+    return ChangeNotifierProvider(
+      create: (_) => ProjectCardProvider(),
+      child: Consumer<ProjectCardProvider>(
+        builder: (context, provider, child) {
+          final bool isCardActive = provider.isCardActive;
 
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        MouseRegion(
-          onEnter: (_) => setState(() => _isHovered = true),
-          onExit: (_) => setState(() => _isHovered = false),
-          child: ClipPath(
-            clipper: CardNotchClipper(),
-            child: CustomPaint(
-              foregroundPainter: CardNotchPainter(isHovered: isCardActive),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                width: 350,
-                height: 480,
-                // Transparent by default, theme purple on hover
-                color: isCardActive ? AppColors.primaryAccent.withValues(alpha: 0.7) : Colors.transparent,
-                child: Stack(
-                  children: [
-                    // Content Area (Top text)
-                    Positioned(
-                      top: 24,
-                      left: 24,
-                      right: 110, // Leave space for the notch
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              MouseRegion(
+                onEnter: (_) => provider.setHovered(true),
+                onExit: (_) => provider.setHovered(false),
+                child: ClipPath(
+                  clipper: CardNotchClipper(),
+                  child: CustomPaint(
+                    foregroundPainter: CardNotchPainter(isHovered: isCardActive),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      width: 350,
+                      height: 480,
+                      // Transparent by default, theme purple on hover
+                      color: isCardActive ? AppColors.primaryAccent.withValues(alpha: 0.7) : Colors.transparent,
+                      child: Stack(
                         children: [
-                          Text(
-                            widget.project.title,
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                  color: AppColors.textPrimary,
-                                  fontWeight: FontWeight.bold,
+                          // Content Area (Top text)
+                          Positioned(
+                            top: 24,
+                            left: 24,
+                            right: 110, // Leave space for the notch
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  project.title,
+                                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                        color: AppColors.textPrimary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  project.category,
+                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                        color: AppColors.textSecondary,
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            widget.project.category,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: AppColors.textSecondary,
+
+                          // Description Box (Fades in on hover)
+                          AnimatedPositioned(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 300),
+                              opacity: isCardActive ? 1.0 : 0.0,
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                height: 80,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.glassBackgroundDark,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(16),
+                                    bottomRight: Radius.circular(16),
+                                  ),
                                 ),
+                                child: Text(
+                                  project.description,
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: AppColors.textPrimary,
+                                        height: 1.4,
+                                      ),
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // Project Image / Preview Area
+                          AnimatedPositioned(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            top: isCardActive ? 150 : 206, // Moves up on hover
+                            left: 24,
+                            right: 24,
+                            height: 250,
+                            child: TweenAnimationBuilder(
+                              tween: Tween<double>(begin: 0, end: provider.isInfoHovered ? pi : 0),
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeInOut,
+                              builder: (context, value, child) {
+                                bool isBack = value >= pi / 2;
+                                return Transform(
+                                  transform: Matrix4.identity()
+                                    ..setEntry(3, 2, 0.001)
+                                    ..rotateY(value),
+                                  alignment: Alignment.center,
+                                  child: isBack
+                                      ? Transform(
+                                          alignment: Alignment.center,
+                                          transform: Matrix4.identity()..rotateY(pi),
+                                          child: _buildToolsContainer(context, provider.isInfoHovered),
+                                        )
+                                      : _buildImageContainer(provider.isHovered),
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
                     ),
-
-                    // Description Box (Fades in on hover)
-                    AnimatedPositioned(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: AnimatedOpacity(
-                        duration: const Duration(milliseconds: 300),
-                        opacity: isCardActive ? 1.0 : 0.0,
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          height: 80,
-                          decoration: const BoxDecoration(
-                            color: AppColors.glassBackgroundDark,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(16),
-                              bottomRight: Radius.circular(16),
-                            ),
-                          ),
-                          child: Text(
-                            widget.project.description,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: AppColors.textPrimary,
-                                  height: 1.4,
-                                ),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // Project Image / Preview Area
-                    AnimatedPositioned(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      top: isCardActive ? 150 : 206, // Moves up on hover
-                      left: 24,
-                      right: 24,
-                      height: 250,
-                      child: TweenAnimationBuilder(
-                        tween: Tween<double>(begin: 0, end: _isInfoHovered ? pi : 0),
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeInOut,
-                        builder: (context, value, child) {
-                          bool isBack = value >= pi / 2;
-                          return Transform(
-                            transform: Matrix4.identity()
-                              ..setEntry(3, 2, 0.001)
-                              ..rotateY(value),
-                            alignment: Alignment.center,
-                            child: isBack
-                                ? Transform(
-                                    alignment: Alignment.center,
-                                    transform: Matrix4.identity()..rotateY(pi),
-                                    child: _buildToolsContainer(_isInfoHovered),
-                                  )
-                                : _buildImageContainer(_isHovered),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 16,
-          right: 16,
-          child: MouseRegion(
-            onEnter: (_) => setState(() => _isInfoHovered = true),
-            onExit: (_) => setState(() => _isInfoHovered = false),
-            child: Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: _isInfoHovered
-                    ? LinearGradient(
-                        colors: [AppColors.primaryAccent.withValues(alpha: 0.5), AppColors.primaryAccent],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      )
-                    : null,
-                boxShadow: _isInfoHovered
-                    ? [
-                        BoxShadow(
-                          color: AppColors.primaryAccent.withValues(alpha: _isInfoHovered ? 0.6 : 0.3),
-                          blurRadius: _isInfoHovered ? 16 : 10,
-                          offset: Offset(0, _isInfoHovered ? 6 : 4),
-                        ),
-                      ]
-                    : null,
+              Positioned(
+                top: 16,
+                right: 16,
+                child: MouseRegion(
+                  onEnter: (_) => provider.setInfoHovered(true),
+                  onExit: (_) => provider.setInfoHovered(false),
+                  child: Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: provider.isInfoHovered
+                          ? LinearGradient(
+                              colors: [AppColors.primaryAccent.withValues(alpha: 0.5), AppColors.primaryAccent],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            )
+                          : null,
+                      boxShadow: provider.isInfoHovered
+                          ? [
+                              BoxShadow(
+                                color: AppColors.primaryAccent.withValues(alpha: provider.isInfoHovered ? 0.6 : 0.3),
+                                blurRadius: provider.isInfoHovered ? 16 : 10,
+                                offset: Offset(0, provider.isInfoHovered ? 6 : 4),
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: Icon(
+                      Icons.info_outline, // Arrow exactly matching the user's reference image
+                      color: AppColors.glassBorder,
+                      size: 28,
+                    ),
+                  ),
+                ),
               ),
-              child: Icon(
-                Icons.info_outline, // Arrow exactly matching the user's reference image
-                color: AppColors.glassBorder,
-                size: 28,
-              ),
-            ),
-          ),
-        ),
-      ],
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -196,9 +197,9 @@ class _ProjectCardState extends State<ProjectCard> {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child: widget.project.imageUrl != null
+      child: project.imageUrl != null
           ? Image.asset(
-              widget.project.imageUrl!,
+              project.imageUrl!,
               fit: BoxFit.cover,
             )
           : const Center(
@@ -211,7 +212,7 @@ class _ProjectCardState extends State<ProjectCard> {
     );
   }
 
-  Widget _buildToolsContainer(bool isHovered) {
+  Widget _buildToolsContainer(BuildContext context, bool isHovered) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -244,7 +245,7 @@ class _ProjectCardState extends State<ProjectCard> {
               child: Wrap(
                 spacing: 8,
                 runSpacing: 8,
-                children: widget.project.tools
+                children: project.tools
                     .map((tool) => Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme/app_colors.dart';
 import '../widgets/datas.dart';
 import '../../core/utils/responsive.dart';
+import '../../core/providers/contact_card_provider.dart';
 
-class ContactSection extends StatefulWidget {
+class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
 
-  @override
-  State<ContactSection> createState() => _ContactSectionState();
-}
-
-class _ContactSectionState extends State<ContactSection> {
   @override
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
@@ -85,73 +82,75 @@ class _ContactSectionState extends State<ContactSection> {
   }
 }
 
-class _ContactCard extends StatefulWidget {
+class _ContactCard extends StatelessWidget {
   final Map item;
 
   const _ContactCard({required this.item});
 
-  @override
-  State<_ContactCard> createState() => _ContactCardState();
-}
-
-class _ContactCardState extends State<_ContactCard> {
-  bool _isHovered = false;
-
   Future<void> _launchUrl(String urlString) async {
     final Uri url = Uri.parse(urlString.contains('@') ? 'mailto:$urlString' : urlString);
     if (!await launchUrl(url)) {
-      debugPrint('Could not launch \$url');
+      debugPrint('Could not launch $url');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: () => _launchUrl(widget.item['url']),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-          transform: _isHovered ? Matrix4.translationValues(0, -5, 0) : Matrix4.identity(),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          decoration: BoxDecoration(
-            color: _isHovered ? AppColors.glassBackgroundDark : AppColors.glassBackground,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: _isHovered ? AppColors.primaryAccent : AppColors.glassBorder,
-              width: _isHovered ? 1.5 : 1.0,
-            ),
-            boxShadow: _isHovered
-                ? [
-                    BoxShadow(
-                      color: AppColors.primaryAccent.withValues(alpha: 0.2),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
-                    )
-                  ]
-                : [],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: 24,
-                height: 24,
-                child: widget.item['logo'],
-              ),
-              const SizedBox(width: 12),
-              Text(
-                widget.item['id'],
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: _isHovered ? AppColors.secondaryAccent : AppColors.textPrimary,
-                      fontWeight: FontWeight.w600,
+    return ChangeNotifierProvider(
+      create: (_) => ContactCardProvider(),
+      child: Consumer<ContactCardProvider>(
+        builder: (context, provider, child) {
+          final isHovered = provider.isHovered;
+
+          return MouseRegion(
+            onEnter: (_) => provider.setHovered(true),
+            onExit: (_) => provider.setHovered(false),
+            child: GestureDetector(
+              onTap: () => _launchUrl(item['url']),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+                transform: isHovered ? Matrix4.translationValues(0, -5, 0) : Matrix4.identity(),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: BoxDecoration(
+                  color: isHovered ? AppColors.glassBackgroundDark : AppColors.glassBackground,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: isHovered ? AppColors.primaryAccent : AppColors.glassBorder,
+                    width: isHovered ? 1.5 : 1.0,
+                  ),
+                  boxShadow: isHovered
+                      ? [
+                          BoxShadow(
+                            color: AppColors.primaryAccent.withValues(alpha: 0.2),
+                            blurRadius: 15,
+                            offset: const Offset(0, 8),
+                          )
+                        ]
+                      : [],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: item['logo'],
                     ),
+                    const SizedBox(width: 12),
+                    Text(
+                      item['id'],
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: isHovered ? AppColors.secondaryAccent : AppColors.textPrimary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

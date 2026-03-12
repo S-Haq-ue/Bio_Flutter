@@ -19,8 +19,8 @@ class ExperienceSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            alignment: WrapAlignment.center,
             children: [
               Text(
                 "Work ",
@@ -99,63 +99,71 @@ class ExperienceSection extends StatelessWidget {
     required bool isLast,
   }) {
     if (isMobile) {
-      // Mobile Layout: Timeline on the left, content on the right
-      return IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      // Mobile Layout: Timeline drawn behind/beside content using Stack to avoid IntrinsicHeight overflows
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 40.0),
+        child: Stack(
           children: [
-            // Timeline Column
-            SizedBox(
-              width: 50,
-              child: CustomPaint(
-                painter: TimelinePainter(
-                  isActive: isActive,
-                  isFirst: isFirst,
-                  isLast: isLast,
-                  isMobile: true,
+            // Timeline line & nodes
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  width: 50,
+                  child: CustomPaint(
+                    painter: TimelinePainter(
+                      isActive: isActive,
+                      isFirst: isFirst,
+                      isLast: isLast,
+                      isMobile: true,
+                    ),
+                  ),
                 ),
               ),
             ),
-            // Content Column
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 40.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      role,
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            color: AppColors.textPrimary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      company,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: AppColors.textPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      duration,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      description,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: AppColors.textSecondary,
-                            height: 1.5,
-                          ),
-                    ),
-                  ],
+            // Content Row
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(width: 50), // Timeline spacer
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        role,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        company,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        duration,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        description,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: AppColors.textSecondary,
+                              height: 1.5,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         ),

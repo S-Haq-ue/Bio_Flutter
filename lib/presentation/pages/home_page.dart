@@ -9,67 +9,16 @@ import '../sections/education_section.dart';
 import '../widgets/animated_background.dart';
 import '../widgets/glass_nav_bar.dart';
 import '../../core/utils/responsive.dart';
-class HomePage extends StatefulWidget {
+import 'package:provider/provider.dart';
+import '../../core/providers/home_provider.dart';
+
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final ScrollController _scrollController = ScrollController();
-  
-  final GlobalKey _heroKey = GlobalKey();
-  final GlobalKey _aboutKey = GlobalKey();
-  final GlobalKey _experienceKey = GlobalKey();
-  final GlobalKey _skillsKey = GlobalKey();
-  final GlobalKey _projectsKey = GlobalKey();
-  final GlobalKey _educationKey = GlobalKey();
-  final GlobalKey _contactKey = GlobalKey();
-
-  void _scrollToSection(String section) {
-    GlobalKey? targetKey;
-    switch (section) {
-      case 'Home':
-        targetKey = _heroKey;
-        break;
-      case 'About':
-        targetKey = _aboutKey;
-        break;
-      case 'Skills':
-        targetKey = _skillsKey;
-        break;
-      case 'Projects':
-        targetKey = _projectsKey;
-        break;
-      case 'Experience':
-        targetKey = _experienceKey;
-        break;
-      case 'Education':
-        targetKey = _educationKey;
-        break;
-      case 'Contact':
-        targetKey = _contactKey;
-        break;
-    }
-
-    if (targetKey != null && targetKey.currentContext != null) {
-      Scrollable.ensureVisible(
-        targetKey.currentContext!,
-        duration: const Duration(milliseconds: 800),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final homeProvider = context.read<HomeProvider>();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: Responsive.isMobile(context)
@@ -98,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onTap: () {
                       Navigator.pop(context); // close drawer
-                      _scrollToSection(item);
+                      homeProvider.scrollToSection(item);
                     },
                   );
                 }).toList(),
@@ -112,16 +61,16 @@ class _HomePageState extends State<HomePage> {
 
           // 2. Scrollable Content Layer
           SingleChildScrollView(
-            controller: _scrollController,
+            controller: homeProvider.scrollController,
             child: Column(
               children: [
-                HeroSection(key: _heroKey),
-                AboutSection(key: _aboutKey),
-                ExperienceSection(key: _experienceKey),
-                SkillsSection(key: _skillsKey),
-                ProjectsSection(key: _projectsKey),
-                EducationSection(key: _educationKey),
-                ContactSection(key: _contactKey),
+                HeroSection(key: homeProvider.heroKey),
+                AboutSection(key: homeProvider.aboutKey),
+                ExperienceSection(key: homeProvider.experienceKey),
+                SkillsSection(key: homeProvider.skillsKey),
+                ProjectsSection(key: homeProvider.projectsKey),
+                EducationSection(key: homeProvider.educationKey),
+                ContactSection(key: homeProvider.contactKey),
               ],
             ),
           ),
@@ -133,7 +82,7 @@ class _HomePageState extends State<HomePage> {
               left: 0,
               right: 0,
               child: Center(
-                child: GlassNavBar(onNavSelected: _scrollToSection),
+                child: GlassNavBar(onNavSelected: homeProvider.scrollToSection),
               ),
             ),
         ],

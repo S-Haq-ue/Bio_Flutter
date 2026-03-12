@@ -1,46 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/theme/app_colors.dart';
 import '../widgets/datas.dart';
-
 import '../../core/utils/responsive.dart';
 
-class SkillsSection extends StatefulWidget {
+class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
 
   @override
-  State<SkillsSection> createState() => _SkillsSectionState();
-}
-
-class _SkillsSectionState extends State<SkillsSection> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  bool _isVisible = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Staggered animation controller
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!_isVisible && mounted) {
-        setState(() {
-          _isVisible = true;
-          _controller.forward();
-        });
-      }
-    });
-
     final isMobile = Responsive.isMobile(context);
 
     return Container(
@@ -52,8 +21,8 @@ class _SkillsSectionState extends State<SkillsSection> with SingleTickerProvider
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            alignment: WrapAlignment.center,
             children: [
               Text(
                 "My ",
@@ -83,28 +52,6 @@ class _SkillsSectionState extends State<SkillsSection> with SingleTickerProvider
               ),
             ],
           ),
-          // Text(
-          //   "My Stack",
-          //   style: Theme.of(context).textTheme.displayLarge?.copyWith(
-          //     fontSize: isMobile ? 36 : 48,
-          //     color: AppColors.secondaryAccent,
-          //     shadows: [
-          //       Shadow(
-          //         color: AppColors.secondaryAccent.withOpacity(0.5),
-          //         blurRadius: 10,
-          //       )
-          //     ],
-          //   ),
-          // ),
-          // const SizedBox(height: 16),
-          // Text(
-          //   "Technologies & Platforms I have mapped out",
-          //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          //         fontSize: isMobile ? 16 : 20,
-          //         color: AppColors.textSecondary,
-          //       ),
-          //   textAlign: TextAlign.center,
-          // ),
           const SizedBox(height: 64),
 
           // Platforms / Roles Grid
@@ -126,6 +73,7 @@ class _SkillsSectionState extends State<SkillsSection> with SingleTickerProvider
                   index,
                   skillsPlatform.length,
                   isMobile,
+                  context,
                 );
               }),
             ),
@@ -152,6 +100,7 @@ class _SkillsSectionState extends State<SkillsSection> with SingleTickerProvider
                   index + skillsPlatform.length,
                   skills.length + skillsPlatform.length,
                   isMobile,
+                  context,
                 );
               }),
             ),
@@ -171,64 +120,54 @@ class _SkillsSectionState extends State<SkillsSection> with SingleTickerProvider
     );
   }
 
-  Widget _buildSkillCard(String name, Widget logo, int index, int totalItems, bool isMobile, {double? customWidth}) {
-    // Calculate a staggered delay for each item
-    final delay = index / totalItems;
-    final curve = CurvedAnimation(
-      parent: _controller,
-      curve: Interval(delay, 1.0, curve: Curves.easeOutBack),
-    );
+  Widget _buildSkillCard(String name, Widget logo, int index, int totalItems, bool isMobile, BuildContext context, {double? customWidth}) {
+    // Staggered delay based on index
+    final int delayMs = (index * 100);
 
-    final scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(curve);
-    final fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(curve);
-
-    return ScaleTransition(
-      scale: scaleAnimation,
-      child: FadeTransition(
-        opacity: fadeAnimation,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              width: customWidth ?? (isMobile ? 140 : 180),
-              height: isMobile ? 140 : 180,
-              decoration: BoxDecoration(
-                color: AppColors.glassBackground,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AppColors.glassBorder, width: 1.5),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha:0.05),
-                    blurRadius: 20,
-                    spreadRadius: 2,
-                  )
-                ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          width: customWidth ?? (isMobile ? 140 : 180),
+          height: isMobile ? 140 : 180,
+          decoration: BoxDecoration(
+            color: AppColors.glassBackground,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: AppColors.glassBorder, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha:0.05),
+                blurRadius: 20,
+                spreadRadius: 2,
+              )
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: isMobile ? 50 : 70,
+                width: isMobile ? 50 : 70,
+                child: logo,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: isMobile ? 50 : 70,
-                    width: isMobile ? 50 : 70,
-                    child: logo,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    name,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: isMobile ? 14 : 16,
-                        ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+              const SizedBox(height: 16),
+              Text(
+                name,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: isMobile ? 14 : 16,
+                    ),
+                textAlign: TextAlign.center,
               ),
-            ),
+            ],
           ),
         ),
       ),
-    );
+    ).animate(delay: delayMs.ms)
+     .scale(duration: 800.ms, curve: Curves.easeOutBack, begin: const Offset(0, 0), end: const Offset(1, 1))
+     .fade(duration: 500.ms);
   }
 }
+

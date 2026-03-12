@@ -2,8 +2,18 @@ import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
 import 'presentation/pages/home_page.dart';
 
+import 'package:provider/provider.dart';
+import 'core/providers/home_provider.dart';
+
 void main() {
-  runApp(const PortfolioApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
+      ],
+      child: const PortfolioApp(),
+    ),
+  );
 }
 
 class PortfolioApp extends StatelessWidget {
